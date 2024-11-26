@@ -1,0 +1,27 @@
+{
+	"name": "demo-effect-server",
+	"version": "0.0.1",
+	"packageManager": "yarn@4.5.3",
+	"type": "module",
+	"scripts": {
+		"build": "tsc --build",
+		"lint": "yarn lint:syncpack && yarn lint:biome",
+		"lint:biome": "biome check --write --no-errors-on-unmatched",
+		"lint:syncpack": "syncpack format --config syncpack.config.js",
+		"start": "tsx watch --inspect=4040 src/index.ts"
+	},
+	"dependencies": {
+		"@effect/platform": "^0.69.21",
+		"@effect/platform-node": "^0.64.23",
+		"cookie": "^1.0.1",
+		"effect": "^3.10.14",
+		"supertokens-node": "^21.1.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/cookie": "^0.6.0",
+		"syncpack": "^13.0.0",
+		"tsx": "^4.7.1",
+		"typescript": "5.7"
+	}
+}
