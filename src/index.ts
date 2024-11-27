@@ -1,14 +1,14 @@
 import { createServer } from 'node:http'
 import { HttpApiBuilder, HttpApiSwagger } from '@effect/platform'
 import { NodeHttpServer, NodeRuntime } from '@effect/platform-node'
-import { Config, Effect, Layer } from 'effect'
+import { Effect, Layer } from 'effect'
 
-import { ApiLive } from './api/index.js'
-import { withCorsMiddleware } from './cors.js'
+import { ApiLive } from './api/apis.js'
+import { withCorsMiddleware } from './api/cors.js'
 import { Env } from './env.js'
-import { initializeSupertokens } from './supertokens.js'
+import { SuperTokens } from './supertokens.js'
 
-initializeSupertokens()
+// TODO: init SuperTokens
 
 const program = Effect.gen(function* () {
 	const config = yield* Env.load

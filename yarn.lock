@@ -839,7 +839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:^1.0.1":
+"cookie@npm:^1.0.2":
   version: 1.0.2
   resolution: "cookie@npm:1.0.2"
   checksum: 10c0/fd25fe79e8fbcfcaf6aa61cd081c55d144eeeba755206c058682257cb38c4bd6795c6620de3f064c740695bb65b7949ebb1db7a95e4636efb8357a335ad3f54b
@@ -935,7 +935,7 @@ __metadata:
     "@effect/platform": "npm:^0.69.21"
     "@effect/platform-node": "npm:^0.64.23"
     "@types/cookie": "npm:^0.6.0"
-    cookie: "npm:^1.0.1"
+    cookie: "npm:^1.0.2"
     effect: "npm:^3.10.14"
     supertokens-node: "npm:^21.1.0"
     syncpack: "npm:^13.0.0"

@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@effect/platform": "^0.69.21",
 		"@effect/platform-node": "^0.64.23",
-		"cookie": "^1.0.1",
+		"cookie": "^1.0.2",
 		"effect": "^3.10.14",
 		"supertokens-node": "^21.1.0"
 	},
