@@ -1,0 +1,20 @@
+name: demo_email
+
+services:
+  email:
+    container_name: email
+    image: inbucket/inbucket:latest
+    environment:
+      - INBUCKET_WEB_ADDR=:9000
+      - INBUCKET_SMTP_ADDR=:2500
+      - INBUCKET_POP3_ADDR=:1100
+      - INBUCKET_STORAGE_PATH=/storage
+      - INBUCKET_SMTP_AUTH_ALLOW=true
+      - INBUCKET_SMTP_AUTH_ACCOUNTS=user:password
+    ports:
+      - 9000:9000 # Web interface at http://localhost:9000
+      - 2500:2500 # SMTP service
+      - 1100:1100 # POP3 service
+    volumes:
+      - ./config:/config # Optional: Customize greeting.html or other configs
+      - ./storage:/storage # Optional: Persist emails across restarts

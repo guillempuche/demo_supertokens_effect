@@ -36,13 +36,23 @@ yarn install
 1. Copy the `.env.example` file to `.env` for the server.
 2. Copy the `.env.example` file to `.env` for the SuperTokens Docker.
 
-### 3. Set Up SuperTokens
+### 3. Set Up Docker Containers
 
 Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or alternatives like [OrbStack](https://orbstack.dev/) and start SuperTokens:
 
+Run the following commands to start the containers:
+
 ```bash
-docker compose -f docker/supertokens/docker-compose.yaml up
+docker compose -f docker/email/docker-compose.yaml up -d
+docker compose -f docker/supertokens/docker-compose.yaml up -d
 ```
+
+> [!NOTE] For stopping the containers:
+>
+> ```bash
+> docker compose -f docker/email/docker-compose.yaml down
+> docker compose -f docker/supertokens/docker-compose.yaml down
+> ```
 
 ### 4. Start the Server
 
