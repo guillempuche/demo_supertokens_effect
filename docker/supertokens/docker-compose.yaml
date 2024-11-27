@@ -12,8 +12,6 @@ services:
       POSTGRES_DB: supertokens
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-    networks:
-      - supertokens
     restart: always
     healthcheck:
       test: ['CMD', 'pg_isready', '-U', 'supertokens_user', '-d', 'supertokens']
@@ -37,8 +35,6 @@ services:
       API_KEYS: ${AUTH_API_KEY} # Used in Supertokens configuration of the server. Docker logs warns if the key format is incorrect
     ports:
       - 3567:3567
-    networks:
-      - supertokens
     restart: unless-stopped
     healthcheck:
       test: >
@@ -46,10 +42,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-networks:
-  supertokens:
-    driver: bridge
 
 volumes:
   postgres-data:
