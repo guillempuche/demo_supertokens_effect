@@ -9,11 +9,13 @@
 		"start": "vite"
 	},
 	"dependencies": {
+		"@tailwindcss/vite": "^4.0.0-beta.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.2.1",
 		"supertokens-auth-react": "^0.48.0",
-		"supertokens-web-js": "^0.14.0"
+		"supertokens-web-js": "^0.14.0",
+		"tailwindcss": "^4.0.0-beta.4"
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.56",
@@ -22,8 +24,7 @@
 		"@vitejs/plugin-react": "^4.3.4",
 		"typescript": "^5.7.2",
 		"vite": "^6.0.1",
-		"vite-plugin-pwa": "^0.21.0",
-		"vite-plugin-svgr": "^4.3.0"
+		"vite-plugin-pwa": "^0.21.1"
 	},
 	"browserslist": {
 		"production": [">0.2%", "not dead", "not op_mini all"],

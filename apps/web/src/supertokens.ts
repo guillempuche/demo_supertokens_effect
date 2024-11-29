@@ -1,7 +1,15 @@
+/**
+ * @fileoverview SuperTokens configuration and functions for passwordless and session management.
+ *
+ * Docs https://supertokens.com/docs/passwordless/quickstart/frontend-setup
+ */
+
 import Passwordless, {
 	createCode,
 	resendCode,
 	clearLoginAttemptInfo,
+	getLoginAttemptInfo,
+	consumeCode,
 } from 'supertokens-auth-react/recipe/passwordless'
 import Session from 'supertokens-auth-react/recipe/session'
 
@@ -14,56 +22,97 @@ export const SuperTokensConfig = {
 	recipeList: [Passwordless.init({ contactMethod: 'EMAIL' }), Session.init()],
 }
 
-export async function sendMagicLink(email: string) {
+export async function sendMagicLink(
+	email: string,
+): Promise<{ status: string; error?: string }> {
 	try {
 		const response = await createCode({
 			email,
 		})
 
 		if (response.status === 'SIGN_IN_UP_NOT_ALLOWED') {
-			// the reason string is a user friendly message
-			// about what went wrong. It can also contain a support code which users
-			// can tell you so you know why their sign in / up was not allowed.
-			window.alert(response.reason)
-		} else {
-			// Magic link sent successfully.
-			window.alert('Please check your email for the magic link')
+			return { status: 'error', error: response.reason }
 		}
+
+		return { status: 'success' }
 	} catch (err: any) {
+		// Clear login attempt if there's an error to allow user to try again
+		await clearLoginAttemptInfo()
+
 		if (err.isSuperTokensGeneralError === true) {
-			// this may be a custom error message sent from the API by you,
-			// or if the input email / phone number is not valid.
-			window.alert(err.message)
-		} else {
-			window.alert('Oops! Something went wrong.')
+			return { status: 'error', error: err.message }
 		}
+		return { status: 'error', error: 'Something went wrong. Please try again.' }
 	}
 }
 
-export async function resendMagicLink() {
+export async function resendMagicLink(): Promise<{
+	status: string
+	error?: string
+}> {
 	try {
 		const response = await resendCode()
 
 		if (response.status === 'RESTART_FLOW_ERROR') {
-			// this can happen if the user has already successfully logged in into
-			// another device whilst also trying to login to this one.
-
-			// we clear the login attempt info that was added when the createCode function
-			// was called - so that if the user does a page reload, they will now see the
-			// enter email / phone UI again.
+			// User might have logged in on another device
 			await clearLoginAttemptInfo()
-			window.alert('Login failed. Please try again')
-			window.location.assign('/auth')
-		} else {
-			// Magic link resent successfully.
-			window.alert('Please check your email for the magic link')
+			return {
+				status: 'error',
+				error: 'Login failed. Please start the process again.',
+			}
+		}
+
+		return { status: 'success' }
+	} catch (err: any) {
+		await clearLoginAttemptInfo()
+
+		if (err.isSuperTokensGeneralError === true) {
+			return { status: 'error', error: err.message }
+		}
+		return { status: 'error', error: 'Something went wrong. Please try again.' }
+	}
+}
+
+export async function verifyCode(
+	userInputCode: string,
+): Promise<{ status: string; error?: string }> {
+	try {
+		// First check if this is the same browser/device that started the flow
+		const loginAttemptInfo = await getLoginAttemptInfo()
+		if (!loginAttemptInfo) {
+			return {
+				status: 'error',
+				error: 'Please start the login process again from this device.',
+			}
+		}
+
+		const response = await consumeCode({
+			userInputCode,
+		})
+
+		if (response.status === 'OK') {
+			// Clear login attempt info after successful verification
+			await clearLoginAttemptInfo()
+			return { status: 'success' }
+		}
+		return {
+			status: 'error',
+			error: 'Invalid or expired code. Please try again.',
 		}
 	} catch (err: any) {
 		if (err.isSuperTokensGeneralError === true) {
-			// this may be a custom error message sent from the API by you.
-			window.alert(err.message)
-		} else {
-			window.alert('Oops! Something went wrong.')
+			return { status: 'error', error: err.message }
 		}
+		return { status: 'error', error: 'Something went wrong. Please try again.' }
 	}
+}
+
+// Check if initial magic link has been sent
+export async function hasInitialMagicLinkBeenSent(): Promise<boolean> {
+	return (await getLoginAttemptInfo()) !== undefined
+}
+
+// Check if this is the same browser/device that started the flow
+export async function isThisSameBrowserAndDevice(): Promise<boolean> {
+	return (await getLoginAttemptInfo()) !== undefined
 }

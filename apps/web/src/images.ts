@@ -1,6 +1,0 @@
-export const SeparatorLine = '/images/separator-line.svg'
-export const ArrowRight = '/images/arrow-right-icon.svg'
-export const SignOutIcon = '/images/sign-out-icon.svg'
-export const GuideIcon = '/images/guide-icon.svg'
-export const BlogsIcon = '/images/blogs-icon.svg'
-export const CelebrateIcon = '/images/celebrate-icon.svg'
