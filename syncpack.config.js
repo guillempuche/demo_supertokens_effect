@@ -50,9 +50,5 @@ export default {
 		'private',
 	],
 	sortPackages: true,
-	source: [
-		'package.json',
-		'xiroi-apps/*/package.json',
-		'xiroi-packages/**/package.json',
-	],
+	source: ['package.json', 'apps/server/package.json', 'apps/web/package.json'],
 }
