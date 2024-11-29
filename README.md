@@ -8,6 +8,8 @@ The server is built using several key components:
 
 - **Effect Framework**: Provides the core server functionality and type-safe error handling, routing and middleware
 - **SuperTokens**: Handles authentication with passwordless login
+- **React**: Frontend web application
+- **Inbucket**: Local SMTP server for testing emails
 
 ### Server Flow
 
@@ -18,8 +20,9 @@ The server is built using several key components:
    - API routes are defined using Effect's HttpApiBuilder
 
 2. **Authentication Flow**:
-   - User requests come through CORS middleware
-   - SuperTokens middleware validates authentication
+   - User enters any email address for passwordless login
+   - Magic link code is sent to local SMTP server (viewable at localhost:9000)
+   - User enters the code to authenticate
    - Protected routes check session status
    - User metadata can be accessed for authenticated users
 
@@ -33,12 +36,13 @@ yarn install
 
 ### 2. Configure Environment
 
-1. Copy the `.env.example` file to `.env` for the server.
-2. Copy the `.env.example` file to `.env` for the SuperTokens Docker.
+1. Copy the `.env.example` file to `.env` in the server app
+2. Copy the `.env.example` file to `.env` in the web app
+3. Copy the `.env.example` file to `.env` for the SuperTokens Docker
 
 ### 3. Set Up Docker Containers
 
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or alternatives like [OrbStack](https://orbstack.dev/) and start SuperTokens:
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) or alternatives like [OrbStack](https://orbstack.dev/) and start the required services:
 
 Run the following commands to start the containers:
 
@@ -54,11 +58,26 @@ docker compose -f docker/supertokens/docker-compose.yaml up -d
 > docker compose -f docker/supertokens/docker-compose.yaml down
 > ```
 
-### 4. Start the Server
+### 4. Start the Applications
+
+Start both the server and web applications in separate terminal windows:
 
 ```bash
-yarn start
+# Terminal 1 - Start the server (runs on localhost:4040)
+yarn workspace @demo/server start
+
+# Terminal 2 - Start the web app (runs on localhost:3000)
+yarn workspace @demo/web start
 ```
+
+## Testing the Authentication Flow
+
+1. Open `http://localhost:3000` in your browser
+2. Enter any email address in the login form
+3. Open `http://localhost:9000` in a new tab to access the Inbucket email interface
+4. Find your email and copy the magic link code
+5. Enter the code in the verification form
+6. You'll be logged in and can access protected routes
 
 ## Testing with Postman
 
