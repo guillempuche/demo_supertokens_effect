@@ -7,4 +7,5 @@ export const withCorsMiddleware = HttpMiddleware.cors({
 	allowedOrigins: [Config.string('WEBSITE_URL') || ''],
 	allowedHeaders: ['Content-Type', ...getAllCORSHeaders()],
 	credentials: true,
+	methods: ['GET', 'PUT', 'POST', 'DELETE'],
 })
