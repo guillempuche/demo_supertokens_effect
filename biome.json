@@ -52,7 +52,7 @@
 			"./**/build",
 			"./**/dist",
 			"./**/node_modules",
-			"./**/public",
+			"./apps/samples",
 			"./docker"
 		],
 		"ignoreUnknown": true
