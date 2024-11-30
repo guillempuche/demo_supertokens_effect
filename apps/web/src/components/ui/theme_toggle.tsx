@@ -1,4 +1,4 @@
-import { useTheme } from '../contexts/theme'
+import { useTheme } from '../../contexts/theme'
 
 export function ThemeToggle() {
 	const { theme, setTheme } = useTheme()
@@ -30,10 +30,8 @@ function SunIcon() {
 			fill='none'
 			viewBox='0 0 24 24'
 			stroke='currentColor'
-			aria-hidden='true'
-			role='img'
 		>
-			<title>Light mode</title>
+			<title>Light Mode Icon</title>
 			<path
 				strokeLinecap='round'
 				strokeLinejoin='round'
@@ -51,10 +49,8 @@ function MoonIcon() {
 			fill='none'
 			viewBox='0 0 24 24'
 			stroke='currentColor'
-			aria-hidden='true'
-			role='img'
 		>
-			<title>Dark mode</title>
+			<title>Dark Mode Icon</title>
 			<path
 				strokeLinecap='round'
 				strokeLinejoin='round'
@@ -72,10 +68,8 @@ function ComputerIcon() {
 			fill='none'
 			viewBox='0 0 24 24'
 			stroke='currentColor'
-			aria-hidden='true'
-			role='img'
 		>
-			<title>System preference</title>
+			<title>System Mode Icon</title>
 			<path
 				strokeLinecap='round'
 				strokeLinejoin='round'
