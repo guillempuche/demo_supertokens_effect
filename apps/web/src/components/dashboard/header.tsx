@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'supertokens-auth-react/recipe/session'
-import { LanguageSelector } from '../ui/language_selector'
-import { ThemeToggle } from '../ui/theme_toggle'
+import { LanguageSelector, ThemeToggle } from '../ui'
 
 interface DashboardHeaderProps {
 	userId: string

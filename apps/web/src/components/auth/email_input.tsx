@@ -3,8 +3,14 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
 import { hasInitialMagicLinkBeenSent, sendMagicLink } from '../../supertokens'
-import { BodyLarge, Button, LabelLarge, ThemeToggle, TitleLarge } from '../ui'
-import { LanguageSelector } from '../ui/language_selector'
+import {
+	BodyLarge,
+	Button,
+	LabelLarge,
+	LanguageSelector,
+	ThemeToggle,
+	TitleLarge,
+} from '../ui'
 
 export const EmailInput = () => {
 	const { t, i18n } = useTranslation()
