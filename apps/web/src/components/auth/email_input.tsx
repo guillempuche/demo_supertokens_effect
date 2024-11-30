@@ -48,8 +48,8 @@ export const EmailInput = () => {
 	return (
 		<div className='min-h-screen bg-surface flex flex-col'>
 			<div className='flex-1'>
-				<div className='max-w-md mx-auto p-6'>
-					<div className='mb-6 p-4 bg-blue-600 text-white rounded-medium'>
+				<div className='max-w-md mx-auto p-8'>
+					<div className='mb-8 p-4 bg-blue-600 text-white rounded-medium'>
 						<TitleLarge className='mb-2'>
 							{t('auth.testInstructions.title')}
 						</TitleLarge>
@@ -82,6 +82,7 @@ export const EmailInput = () => {
 									border border-surface-variant
 									bg-surface 
 									text-on-surface
+									px-2 py-1
 									placeholder:text-on-surface-variant/70
 									shadow-sm
 									focus:outline-none
@@ -103,8 +104,6 @@ export const EmailInput = () => {
 									className='w-4 h-4'
 									fill='currentColor'
 									viewBox='0 0 20 20'
-									aria-label='Error'
-									role='img'
 								>
 									<title>Error</title>
 									<path

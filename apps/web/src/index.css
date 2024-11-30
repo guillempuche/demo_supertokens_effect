@@ -26,8 +26,8 @@
 	--font-display: system-ui; /* Display and Headlines */
 	--font-body: system-ui; /* Body and Labels */
 
-	/* Spacing - Material Design 3 uses 4px (0.25rem) grid */
-	--spacing: 0.25rem; /* 4px base unit */
+	/* Spacing */
+	--spacing: 0.25rem;  /* Base unit: 4px */
 
 	/* Border Radius */
 	--radius-small: 0.25rem; /* 4px */
@@ -61,8 +61,9 @@
 	--font-display: system-ui; /* Display and Headlines */
 	--font-body: system-ui; /* Body and Labels */
 
-	/* Spacing - Material Design 3 uses 4px (0.25rem) grid */
-	--spacing: 0.25rem; /* 4px base unit */
+	/* Spacing */
+	--spacing: 0.25rem;  /* Base unit: 4px */
+
 
 	/* Border Radius */
 	--radius-small: 0.25rem; /* 4px */
