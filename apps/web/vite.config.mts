@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
 			},
 			sourcemap: mode !== 'production',
 		},
-		envDir: './',
+		envDir: '../',
 		plugins: [
 			react(),
 			tailwindcss(),

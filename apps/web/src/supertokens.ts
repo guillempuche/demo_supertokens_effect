@@ -18,6 +18,8 @@ export const SuperTokensConfig = {
 		appName: 'SuperTokens Demo App',
 		apiDomain: import.meta.env.VITE_API_URL,
 		websiteDomain: import.meta.env.VITE_WEBSITE_URL,
+		apiBasePath: '/auth',
+		websiteBasePath: '/auth',
 	},
 	recipeList: [Passwordless.init({ contactMethod: 'EMAIL' }), Session.init()],
 }
