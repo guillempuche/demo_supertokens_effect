@@ -7,6 +7,7 @@ import {
 	resendMagicLink,
 	verifyCode,
 } from '../../supertokens'
+import { Button } from '../ui/button'
 
 export const CodeVerification = () => {
 	const [code, setCode] = useState('')
@@ -66,7 +67,10 @@ export const CodeVerification = () => {
 		<div className='max-w-md mx-auto p-6'>
 			<form onSubmit={handleSubmit} className='space-y-4'>
 				<div>
-					<label htmlFor='code' className='block text-sm font-medium'>
+					<label
+						htmlFor='code'
+						className='block text-sm font-medium text-on-surface'
+					>
 						Verification Code
 					</label>
 					<input
@@ -74,29 +78,26 @@ export const CodeVerification = () => {
 						type='text'
 						value={code}
 						onChange={e => setCode(e.target.value)}
-						className='mt-1 block w-full rounded-md border-gray-300 shadow-sm'
+						className='mt-1 block w-full rounded-medium border-surface-variant bg-surface text-on-surface shadow-sm'
 						required
 					/>
 				</div>
 
-				{error && <div className='text-red-600 text-sm'>{error}</div>}
+				{error && <div className='text-error text-sm'>{error}</div>}
 
-				<button
-					type='submit'
-					disabled={isLoading}
-					className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50'
-				>
-					{isLoading ? 'Verifying...' : 'Verify Code'}
-				</button>
+				<Button type='submit' fullWidth isLoading={isLoading}>
+					Verify Code
+				</Button>
 
-				<button
+				<Button
 					type='button'
+					variant='secondary'
+					fullWidth
+					isLoading={isResending}
 					onClick={handleResend}
-					disabled={isResending}
-					className='w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50'
 				>
-					{isResending ? 'Resending...' : 'Resend Code'}
-				</button>
+					Resend Code
+				</Button>
 			</form>
 		</div>
 	)

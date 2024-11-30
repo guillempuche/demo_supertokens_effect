@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => {
 			tailwindcss(),
 			VitePWA({
 				registerType: 'autoUpdate',
-				includeAssets: ['favicon.ico', 'logo192.png', 'logo512.png'],
+				includeAssets: ['favicon.ico', 'logo.svg'],
 				manifest: {
 					name: 'Xiroi',
 					short_name: 'Xiroi',
@@ -31,14 +31,10 @@ export default defineConfig(({ mode }) => {
 							type: 'image/x-icon',
 						},
 						{
-							src: 'logo192.png',
-							type: 'image/png',
-							sizes: '192x192',
-						},
-						{
-							src: 'logo512.png',
-							type: 'image/png',
-							sizes: '512x512',
+							src: 'logo.svg',
+							type: 'image/svg+xml',
+							sizes: 'any',
+							purpose: 'any maskable',
 						},
 					],
 					theme_color: '#c44eff',

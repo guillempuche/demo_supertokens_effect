@@ -1,0 +1,22 @@
+{
+	"common": {
+		"language": "Language",
+		"theme": "Theme",
+		"light": "Light",
+		"dark": "Dark",
+		"system": "System"
+	},
+	"auth": {
+		"emailLabel": "Email Address",
+		"sendCode": "Send Code",
+		"testInstructions": {
+			"title": "Testing Instructions",
+			"description": "Use any email (e.g., a@a.co) to test. The magic link will be sent to"
+		}
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"userId": "User ID",
+		"signOut": "Sign Out"
+	}
+}

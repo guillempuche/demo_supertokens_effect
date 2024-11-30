@@ -1,0 +1,22 @@
+{
+	"common": {
+		"language": "Idioma",
+		"theme": "Tema",
+		"light": "Claro",
+		"dark": "Oscuro",
+		"system": "Sistema"
+	},
+	"auth": {
+		"emailLabel": "Correo Electrónico",
+		"sendCode": "Enviar Código",
+		"testInstructions": {
+			"title": "Instrucciones de Prueba",
+			"description": "Use cualquier correo electrónico (ej., a@a.co) para probar. El enlace mágico se enviará a"
+		}
+	},
+	"dashboard": {
+		"title": "Panel de Control",
+		"userId": "ID de Usuario",
+		"signOut": "Cerrar Sesión"
+	}
+}

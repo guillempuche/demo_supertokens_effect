@@ -5,16 +5,19 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsc && vite build",
-		"preview": "vite preview",
+		"preview": "yarn build && vite preview",
 		"start": "vite"
 	},
 	"dependencies": {
 		"@tailwindcss/vite": "^4.0.0-beta.4",
+		"i18next": "^24.0.2",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.2.1",
+		"react-i18next": "^15.1.3",
+		"react-router-dom": "^7.0.1",
 		"supertokens-auth-react": "^0.48.0",
 		"supertokens-web-js": "^0.14.0",
+		"tailwind-merge": "^2.5.5",
 		"tailwindcss": "^4.0.0-beta.4"
 	},
 	"devDependencies": {
@@ -27,7 +30,11 @@
 		"vite-plugin-pwa": "^0.21.1"
 	},
 	"browserslist": {
-		"production": [">0.2%", "not dead", "not op_mini all"],
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
 		"development": [
 			"last 1 chrome version",
 			"last 1 firefox version",

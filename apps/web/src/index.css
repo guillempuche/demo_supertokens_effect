@@ -2,7 +2,7 @@
 
 :root {
 	/* Light mode colors */
-	--color-surface: oklch(98% 0.005 264.05);
+	--color-surface: oklch(98% 0.01 264.05);
 	--color-on-surface: oklch(10% 0.005 264.05);
 
 	/* Colors - Material Design 3 */
@@ -16,7 +16,7 @@
 	--color-secondary-container: oklch(90% 0.1 264.05); /* md.sys.color.secondary-container */
 	--color-on-secondary-container: oklch(20% 0.2 264.05); /* md.sys.color.on-secondary-container */
 
-	--color-surface-variant: oklch(92% 0.02 264.05); /* md.sys.color.surface-variant */
+	--color-surface-variant: oklch(92% 0.03 264.05); /* md.sys.color.surface-variant */
 	--color-on-surface-variant: oklch(30% 0.02 264.05); /* md.sys.color.on-surface-variant */
 
 	--color-error: oklch(54% 0.28 29.23); /* md.sys.color.error */
@@ -38,9 +38,9 @@
 
 :root.dark {
 	/* Dark mode colors */
-	--color-surface: oklch(10% 0.005 264.05);
+	--color-surface: oklch(12% 0.01 264.05);
 	--color-on-surface: oklch(98% 0.005 264.05);
-	--color-surface-variant: oklch(20% 0.02 264.05);
+	--color-surface-variant: oklch(20% 0.03 264.05);
 	--color-on-surface-variant: oklch(92% 0.02 264.05);
 
 	/* Colors - Material Design 3 */

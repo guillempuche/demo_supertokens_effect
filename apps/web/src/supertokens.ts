@@ -24,27 +24,28 @@ export const SuperTokensConfig = {
 	recipeList: [Passwordless.init({ contactMethod: 'EMAIL' }), Session.init()],
 }
 
-export async function sendMagicLink(
-	email: string,
-): Promise<{ status: string; error?: string }> {
+export const sendMagicLink = async (email: string, language?: string) => {
 	try {
 		const response = await createCode({
 			email,
+			userContext: {
+				language,
+			},
 		})
 
-		if (response.status === 'SIGN_IN_UP_NOT_ALLOWED') {
-			return { status: 'error', error: response.reason }
+		if (response.status === 'OK') {
+			return { status: 'success' as const }
 		}
 
-		return { status: 'success' }
-	} catch (err: any) {
-		// Clear login attempt if there's an error to allow user to try again
-		await clearLoginAttemptInfo()
-
-		if (err.isSuperTokensGeneralError === true) {
-			return { status: 'error', error: err.message }
+		return {
+			status: 'error' as const,
+			error: 'Failed to send magic link',
 		}
-		return { status: 'error', error: 'Something went wrong. Please try again.' }
+	} catch (err) {
+		return {
+			status: 'error' as const,
+			error: err instanceof Error ? err.message : 'An error occurred',
+		}
 	}
 }
 

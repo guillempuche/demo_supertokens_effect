@@ -1,9 +1,5 @@
-import {
-	Navigate,
-	Route,
-	BrowserRouter as Router,
-	Routes,
-} from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react'
 import { SessionAuth } from 'supertokens-auth-react/recipe/session'
 
@@ -12,6 +8,7 @@ import { EmailInput } from './components/auth/email_input'
 import { Dashboard } from './components/dashboard'
 import { ThemeProvider } from './contexts/theme'
 import { SuperTokensConfig } from './supertokens'
+import './i18n'
 
 SuperTokens.init(SuperTokensConfig)
 
@@ -19,13 +16,13 @@ export function App() {
 	return (
 		<ThemeProvider>
 			<SuperTokensWrapper>
-				<Router>
+				<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Navigate to='/auth/email' replace />} />
-						<Route path='/auth/email' element={<EmailInput />} />
-						<Route path='/auth/verify' element={<CodeVerification />} />
+						<Route path='auth/email' element={<EmailInput />} />
+						<Route path='auth/verify' element={<CodeVerification />} />
 						<Route
-							path='/dashboard'
+							path='dashboard'
 							element={
 								<SessionAuth>
 									<Dashboard />
@@ -33,7 +30,7 @@ export function App() {
 							}
 						/>
 					</Routes>
-				</Router>
+				</BrowserRouter>
 			</SuperTokensWrapper>
 		</ThemeProvider>
 	)
