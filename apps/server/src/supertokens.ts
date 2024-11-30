@@ -2,6 +2,7 @@ import { Config, Context, Effect, Layer } from 'effect'
 import supertokens from 'supertokens-node'
 import Passwordless from 'supertokens-node/recipe/passwordless'
 import { SMTPService } from 'supertokens-node/recipe/passwordless/emaildelivery'
+import type { TypePasswordlessEmailDeliveryInput } from 'supertokens-node/recipe/passwordless/types'
 import Session from 'supertokens-node/recipe/session'
 import UserMetadata from 'supertokens-node/recipe/usermetadata'
 
@@ -30,6 +31,37 @@ const makeSmtpSettings = (config: SuperTokensConfig) => ({
 	secure: false,
 })
 
+const getEmailSubject = (language?: string) => {
+	switch (language) {
+		case 'es':
+			return 'Tu código de acceso y enlace mágico'
+		default:
+			return 'Your login code and magic link'
+	}
+}
+
+const getEmailBody = (
+	input: TypePasswordlessEmailDeliveryInput,
+	language?: string,
+) => {
+	const expiresInMinutes = Math.floor(input.codeLifetime / (60 * 1000))
+
+	switch (language) {
+		case 'es':
+			return `
+				<p>Tu código de acceso es: <strong>${input.userInputCode}</strong></p>
+				<p>O puedes hacer clic en este enlace mágico: <a href="${input.urlWithLinkCode}">${input.urlWithLinkCode}</a></p>
+				<p>El código y el enlace expirarán en ${expiresInMinutes} minutos.</p>
+			`
+		default:
+			return `
+				<p>Your login code is: <strong>${input.userInputCode}</strong></p>
+				<p>Or click this magic link: <a href="${input.urlWithLinkCode}">${input.urlWithLinkCode}</a></p>
+				<p>The code and link will expire in ${expiresInMinutes} minutes.</p>
+			`
+	}
+}
+
 const make = (config: SuperTokensConfig) =>
 	Effect.sync(() => {
 		supertokens.init({
@@ -48,12 +80,33 @@ const make = (config: SuperTokensConfig) =>
 					emailDelivery: {
 						service: new SMTPService({
 							smtpSettings: makeSmtpSettings(config),
+							override: originalImplementation => {
+								return {
+									...originalImplementation,
+									getContent: async input => {
+										// Get original content first
+										const originalContent =
+											await originalImplementation.getContent(input)
+
+										// Get language from context
+										const language = input.userContext?.language
+
+										// Override with our localized content
+										return {
+											...originalContent,
+											subject: getEmailSubject(language),
+											body: getEmailBody(input, language),
+											isHtml: true,
+										}
+									},
+								}
+							},
 						}),
 					},
 				}),
 				Session.init({
 					cookieSecure: config.nodeEnv === 'production',
-					cookieSameSite: 'lax',
+					cookieSameSite: 'none',
 					exposeAccessTokenToFrontendInCookieBasedAuth: true,
 				}),
 				UserMetadata.init(),
