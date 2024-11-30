@@ -156,18 +156,18 @@ To end a session:
 
 ## Resources
 
-- [Supertokens Passwordless Backend](https://supertokens.com/docs/passwordless/custom-ui/init/backend)
-- [Effect Documentation](https://effect.website/)
-- [Effect GitHub Repository](https://github.com/effect-ts/effect)
+- Supertokens Passwordless (magic link + only email) backend setup: <https://supertokens.com/docs/passwordless/quickstart/backend-setup>)
+- Supertokens getting user id and user metadata: <https://supertokens.com/docs/passwordless/common-customizations/get-user-info#fetching-information-using-the-users-id>
+- Effect documentation: <https://effect.website/>
 
 ## TODO
 
-- Load Supertokens' Session singleton (middleware.ts)
-- Load Supertokens' UserMetadata singleton (middleware.ts)
-- Verify session (middleware.ts)
-- Initialize supertokens.ts when starting server
-- Load environment variables in places using `Config.string` (like in supertokens.ts and cors.ts)
-- Build server in index.ts
+- [Server] Load Supertokens' Session (middleware.ts)
+- [Server] Load Supertokens' UserMetadata singleton (middleware.ts)
+- [Server] Verify session (middleware.ts)
+- [Server] Initialize supertokens.ts when starting server
+- [Server] Load environment variables in places using `Config.string` (like in supertokens.ts and cors.ts)
+- [Server] Start server in index.ts
 
 ## License
 
