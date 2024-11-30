@@ -11,7 +11,8 @@
 		"types": ["vite/client"]
 	},
 	"include": [
-		"types.d.ts",
+		"types/i18n.d.ts",
+		"types/types.d.ts",
 		"vite.config.mts",
 		"src/**/*.ts",
 		"src/**/*.tsx",
