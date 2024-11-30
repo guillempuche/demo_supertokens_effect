@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
-@theme {
+:root {
+	/* Light mode colors */
+	--color-surface: oklch(98% 0.005 264.05);
+	--color-on-surface: oklch(10% 0.005 264.05);
+
 	/* Colors - Material Design 3 */
 	--color-primary: oklch(49.12% 0.3 264.05); /* md.sys.color.primary */
 	--color-on-primary: oklch(98% 0.005 264.05); /* md.sys.color.on-primary */
@@ -12,10 +16,43 @@
 	--color-secondary-container: oklch(90% 0.1 264.05); /* md.sys.color.secondary-container */
 	--color-on-secondary-container: oklch(20% 0.2 264.05); /* md.sys.color.on-secondary-container */
 
-	--color-surface: oklch(98% 0.005 264.05); /* md.sys.color.surface */
-	--color-on-surface: oklch(10% 0.005 264.05); /* md.sys.color.on-surface */
 	--color-surface-variant: oklch(92% 0.02 264.05); /* md.sys.color.surface-variant */
 	--color-on-surface-variant: oklch(30% 0.02 264.05); /* md.sys.color.on-surface-variant */
+
+	--color-error: oklch(54% 0.28 29.23); /* md.sys.color.error */
+	--color-on-error: oklch(98% 0.005 29.23); /* md.sys.color.on-error */
+
+	/* Typography */
+	--font-display: system-ui; /* Display and Headlines */
+	--font-body: system-ui; /* Body and Labels */
+
+	/* Spacing - Material Design 3 uses 4px (0.25rem) grid */
+	--spacing: 0.25rem; /* 4px base unit */
+
+	/* Border Radius */
+	--radius-small: 0.25rem; /* 4px */
+	--radius-medium: 0.75rem; /* 12px */
+	--radius-large: 1rem; /* 16px */
+	--radius-extra-large: 1.75rem; /* 28px */
+}
+
+:root.dark {
+	/* Dark mode colors */
+	--color-surface: oklch(10% 0.005 264.05);
+	--color-on-surface: oklch(98% 0.005 264.05);
+	--color-surface-variant: oklch(20% 0.02 264.05);
+	--color-on-surface-variant: oklch(92% 0.02 264.05);
+
+	/* Colors - Material Design 3 */
+	--color-primary: oklch(49.12% 0.3 264.05); /* md.sys.color.primary */
+	--color-on-primary: oklch(98% 0.005 264.05); /* md.sys.color.on-primary */
+	--color-primary-container: oklch(94% 0.1 264.05); /* md.sys.color.primary-container */
+	--color-on-primary-container: oklch(24% 0.3 264.05); /* md.sys.color.on-primary-container */
+
+	--color-secondary: oklch(45% 0.2 264.05); /* md.sys.color.secondary */
+	--color-on-secondary: oklch(98% 0.005 264.05); /* md.sys.color.on-secondary */
+	--color-secondary-container: oklch(90% 0.1 264.05); /* md.sys.color.secondary-container */
+	--color-on-secondary-container: oklch(20% 0.2 264.05); /* md.sys.color.on-secondary-container */
 
 	--color-error: oklch(54% 0.28 29.23); /* md.sys.color.error */
 	--color-on-error: oklch(98% 0.005 29.23); /* md.sys.color.on-error */

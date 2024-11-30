@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'supertokens-auth-react/recipe/session'
+import { ThemeToggle } from '../theme_toggle'
 
 interface DashboardHeaderProps {
 	userId: string
@@ -24,13 +25,16 @@ export function DashboardHeader({ userId }: DashboardHeaderProps) {
 						User ID: {userId}
 					</p>
 				</div>
-				<button
-					type='button'
-					onClick={handleSignOut}
-					className='px-6 py-2.5 bg-error text-on-error rounded-large hover:bg-error/90 transition-colors'
-				>
-					Sign Out
-				</button>
+				<div className='flex items-center gap-4'>
+					<ThemeToggle />
+					<button
+						type='button'
+						onClick={handleSignOut}
+						className='px-6 py-2.5 bg-error text-on-error rounded-large hover:bg-error/90 transition-colors'
+					>
+						Sign Out
+					</button>
+				</div>
 			</div>
 		</header>
 	)
