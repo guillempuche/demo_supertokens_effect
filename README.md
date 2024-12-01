@@ -162,9 +162,8 @@ To end a session:
 
 ## TODO
 
-- [Server] Load Supertokens' Session (middleware.ts)
+- [Server] Load Supertokens' verify session (middleware.ts)
 - [Server] Load Supertokens' UserMetadata singleton (middleware.ts)
-- [Server] Verify session (middleware.ts)
 - [Server] Initialize supertokens.ts when starting server
 - [Server] Load environment variables in places using `Config.string` (like in supertokens.ts and cors.ts)
 - [Server] Start server in index.ts
