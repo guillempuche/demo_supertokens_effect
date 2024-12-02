@@ -106,7 +106,7 @@ const make = (config: SuperTokensConfig) =>
 				}),
 				Session.init({
 					cookieSecure: config.nodeEnv === 'production',
-					cookieSameSite: 'none',
+					cookieSameSite: 'strict',
 					exposeAccessTokenToFrontendInCookieBasedAuth: true,
 				}),
 				UserMetadata.init(),

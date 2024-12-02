@@ -1,0 +1,27 @@
+# Development Caddyfile
+{
+    # Optional: Enable development mode for more verbose logs
+    debug
+}
+
+localhost {
+    # Handle web application
+    handle /* {
+        reverse_proxy localhost:3000
+    }
+
+    # Handle API requests
+    handle /api/* {
+        uri strip_prefix /api
+        reverse_proxy localhost:4040
+    }
+
+    # Enable logging
+    log {
+        output stdout
+        format console
+    }
+
+    # Enable HTTPS by default (Caddy handles certificates automatically)
+    tls internal
+}

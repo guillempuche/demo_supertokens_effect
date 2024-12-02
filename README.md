@@ -60,15 +60,34 @@ docker compose -f docker/supertokens/docker-compose.yaml up -d
 
 ### 4. Start the Applications
 
-Start both the server and web applications in separate terminal windows:
+Start the reverse proxy, server, and web applications in separate terminal windows:
 
 ```bash
-# Terminal 1 - Start the server (runs on localhost:4040)
+# Terminal 1 - Start Caddy reverse proxy (handles HTTPS and routing)
+caddy run --watch
+
+# Terminal 2 - Start the server (runs on localhost:4040)
 yarn workspace @demo/server start
 
-# Terminal 2 - Start the web app (runs on localhost:3000)
+# Terminal 3 - Start the web app (runs on localhost:3000)
 yarn workspace @demo/web start
 ```
+
+The applications will be available at:
+
+- Web app: <https://localhost>
+- API: <https://localhost/api>
+- Email: <http://localhost:9000>
+
+> [!NOTE]
+> Using Caddy as a reverse proxy provides:
+>
+> - Single domain for both web and API (<https://localhost>)
+> - Automatic HTTPS certificates
+> - Proper same-origin cookie handling for authentication
+> - Production-like environment locally
+
+Make sure to create a `Caddyfile` in your project root.
 
 ## Testing the Authentication Flow
 
