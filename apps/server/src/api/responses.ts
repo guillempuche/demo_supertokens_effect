@@ -8,14 +8,14 @@ export class UserMetadata extends Schema.Class<UserMetadata>('UserMetadata')({
 	}),
 }) {}
 
-export class HelloResponse extends Schema.Class<HelloResponse>('HelloResponse')(
+export class ResponseHello extends Schema.Class<ResponseHello>('ResponseHello')(
 	{
 		message: Schema.String,
 	},
 ) {}
 
-export class ProtectedResponse extends Schema.Class<ProtectedResponse>(
-	'ProtectedResponse',
+export class ResponseProtected extends Schema.Class<ResponseProtected>(
+	'ResponseProtected',
 )({
 	userId: Schema.String,
 }) {}
