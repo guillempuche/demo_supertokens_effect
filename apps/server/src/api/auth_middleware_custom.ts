@@ -15,7 +15,7 @@ import { CurrentUser, Forbidden, Unauthorized } from './types.js'
 type NextFunction = (err?: any) => void
 
 // Inspired from https://github.com/supertokens/supertokens-node/blob/1896eabb0aac587f8b5f7a9bede8cc4b0a17a229/examples/cloudflare-workers/with-email-password-hono-be-only/middleware.ts
-export const authMiddleware = HttpMiddleware.make(app =>
+export const withAuthMiddleware = HttpMiddleware.make(app =>
 	Effect.gen(function* () {
 		const request = yield* ServerRequest.HttpServerRequest
 

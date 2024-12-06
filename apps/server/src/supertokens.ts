@@ -118,8 +118,8 @@ const make = (config: SuperTokensConfig) =>
 		})
 	})
 
-export class SuperTokens extends Context.Tag('SuperTokens')<
-	SuperTokens,
+export class SupertokensService extends Context.Tag('SupertokensService')<
+	SupertokensService,
 	void
 >() {
 	static readonly Config = Config.all({

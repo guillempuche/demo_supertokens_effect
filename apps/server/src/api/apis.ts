@@ -3,16 +3,17 @@ import {
 	HttpApiBuilder,
 	HttpApiEndpoint,
 	HttpApiGroup,
+	HttpApiMiddleware,
+	HttpRouter,
 	OpenApi,
 } from '@effect/platform'
 import { Effect, Layer } from 'effect'
-import Session from 'supertokens-node/recipe/session'
+import SupertokensUserMetadata from 'supertokens-node/recipe/usermetadata'
 import type { UserContext } from 'supertokens-node/types'
 
-import { AuthMiddleware } from './auth_middleware.js'
-import { SupertokensMiddleware } from './middleware_old.js'
+import { withAuthMiddleware } from './auth_middleware_custom.js'
 import { ResponseHello, ResponseProtected, UserMetadata } from './responses.js'
-import { SessionService } from './session.js'
+import { CurrentUser } from './types.js'
 // import { UserMetadataService } from './user_metadata.js'
 
 // ================================================
@@ -28,7 +29,7 @@ const apiDemo = HttpApiGroup.make('demo')
 	.add(
 		HttpApiEndpoint.get('protected', '/protected')
 			.addSuccess(ResponseProtected)
-			.middleware(SupertokensMiddleware)
+			.middleware(withAuthMiddleware)
 			.annotate(OpenApi.Description, 'Returns user ID for authenticated users'),
 	)
 	.annotateContext(
@@ -46,7 +47,8 @@ const apiUsers = HttpApiGroup.make('users')
 				OpenApi.Description,
 				'Get SuperTokens metadata for authenticated user',
 			),
-	).middlewareEndpoints(AuthMiddleware)
+	)
+	.middleware(withAuthMiddleware)
 	.annotateContext(
 		OpenApi.annotations({
 			title: 'Users API',
@@ -73,33 +75,33 @@ const ApiDemoLive = HttpApiBuilder.group(api, 'demo', handlers =>
 			Effect.succeed(new ResponseHello({ message: 'Hello from Effect!' })),
 		)
 		.handle('protected', () =>
-			// Effect.gen(function* () {
-			// 	const session = yield* SessionService
-			// 	return new ResponseProtected({ userId: session.getUserId() })
-			// }),
-			{
-				const session = await Session.getSession(req, res);
-				Effect.succeed(new ResponseProtected({ userId: session.getUserId() })),
-			}
+			Effect.gen(function* () {
+				const user = yield* CurrentUser
+				return new ResponseProtected({ userId: user.id })
+			}),
 		),
 )
 
 const ApiUsersLive = HttpApiBuilder.group(api, 'users', handlers =>
 	handlers.handle('metadata', () =>
 		Effect.gen(function* () {
-			const session = yield* SessionService
-			const userMetadata = yield* UserMetadataService
-
-			const userId = session.getUserId()
+			const user = yield* CurrentUser
 			const userContext: UserContext = {} as UserContext
 
-			const metadata = Effect.tryPromise(() =>
-				userMetadata.getUserMetadata({ userId, userContext }),
-			)
+			// const metadata = Effect.tryPromise(() =>
+			// 	SupertokensUserMetadata.getUserMetadata(user.id),
+			// ).pipe(Effect.from, Effect.flatMap(el => Effect.succeed(el)))
+
+			// if (Effect.isSuccess(metadata)) {
+			// 	return new UserMetadata({
+			// 		userId: user.id,
+			// 		metadata: metadata,
+			// 	})
+			// }
 
 			return new UserMetadata({
-				userId: session.getUserId(),
-				metadata: metadata,
+				userId: user.id,
+				metadata: {},
 			})
 		}),
 	),
