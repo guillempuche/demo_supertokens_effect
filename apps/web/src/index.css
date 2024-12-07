@@ -27,7 +27,7 @@
 	--font-body: system-ui; /* Body and Labels */
 
 	/* Spacing */
-	--spacing: 0.25rem;  /* Base unit: 4px */
+	--spacing: 0.25rem; /* Base unit: 4px */
 
 	/* Border Radius */
 	--radius-small: 0.25rem; /* 4px */
@@ -62,8 +62,7 @@
 	--font-body: system-ui; /* Body and Labels */
 
 	/* Spacing */
-	--spacing: 0.25rem;  /* Base unit: 4px */
-
+	--spacing: 0.25rem; /* Base unit: 4px */
 
 	/* Border Radius */
 	--radius-small: 0.25rem; /* 4px */
