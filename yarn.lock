@@ -1253,7 +1253,7 @@ __metadata:
   resolution: "@demo/server@workspace:apps/server"
   dependencies:
     "@effect/platform": "npm:^0.69.21"
-    "@effect/platform-node": "npm:^0.64.23"
+    "@effect/platform-node": "npm:^0.65.4"
     "@types/cookie": "npm:^0.6.0"
     cookie: "npm:^1.0.2"
     effect: "npm:^3.10.14"
@@ -1286,31 +1286,31 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@effect/platform-node-shared@npm:^0.19.29":
-  version: 0.19.29
-  resolution: "@effect/platform-node-shared@npm:0.19.29"
+"@effect/platform-node-shared@npm:^0.20.4":
+  version: 0.20.4
+  resolution: "@effect/platform-node-shared@npm:0.20.4"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     multipasta: "npm:^0.2.5"
   peerDependencies:
-    "@effect/platform": ^0.69.28
-    effect: ^3.10.19
-  checksum: 10c0/9208b63bd1121ccecab7d89f1e2168e54d987c224e1b85a6f19b576866cd289e450559d6ce18592d3bc2eb744d3b7a6a60263c4cdca2f5d86690bcecf23544e2
+    "@effect/platform": ^0.70.4
+    effect: ^3.11.3
+  checksum: 10c0/dca46400c108c1e6ee09010973ebd5ee21b83c660e93c6c5ed36eff1fd157c36b415690f58c3befe83dd5675d202336670c75d04a5fbea8b7a46c6edb38343d1
   languageName: node
   linkType: hard
 
-"@effect/platform-node@npm:^0.64.23":
-  version: 0.64.30
-  resolution: "@effect/platform-node@npm:0.64.30"
+"@effect/platform-node@npm:^0.65.4":
+  version: 0.65.4
+  resolution: "@effect/platform-node@npm:0.65.4"
   dependencies:
-    "@effect/platform-node-shared": "npm:^0.19.29"
+    "@effect/platform-node-shared": "npm:^0.20.4"
     mime: "npm:^3.0.0"
     undici: "npm:^6.19.7"
     ws: "npm:^8.18.0"
   peerDependencies:
-    "@effect/platform": ^0.69.28
-    effect: ^3.10.19
-  checksum: 10c0/164811bd4cf2b8c026d9a5a664db5ff4ecb56f25b6107b71ba670140f706205005069451dabe92f4082ed289b0d5f3888033d4e92bbf734ea91ac9f24ce1425b
+    "@effect/platform": ^0.70.4
+    effect: ^3.11.3
+  checksum: 10c0/99915676a36f64e90ef2b2533ab0789f11ba8bc8cc19cb7cfda99e979f6d470f36ddb670eb905491b957fda1f2bde97c463a0c84f634aa12c864ebdf5f6fd1d1
   languageName: node
   linkType: hard
 
