@@ -8,7 +8,7 @@ import {
 import { Effect, Layer } from 'effect'
 import type { UserContext } from 'supertokens-node/types'
 
-import { AuthMiddleware, AuthMiddlewareLive } from './auth_middleware_custom.js'
+import { AuthMiddleware, AuthMiddlewareLive } from './auth_middleware.js'
 import { ResponseHello, ResponseProtected, UserMetadata } from './responses.js'
 import { CurrentUser } from './types.js'
 // import { UserMetadataService } from './user_metadata.js'

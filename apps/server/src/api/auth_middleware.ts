@@ -1,7 +1,7 @@
 import { HttpApiMiddleware } from '@effect/platform'
-import ServerRequest from '@effect/platform/HttpServerRequest'
-import ServerResponse from '@effect/platform/HttpServerResponse'
-import Effect from 'effect/Effect'
+import * as ServerRequest from '@effect/platform/HttpServerRequest'
+import * as ServerResponse from '@effect/platform/HttpServerResponse'
+import { Effect, Layer, Schema } from 'effect'
 import {
 	CollectingResponse,
 	PreParsedRequest,
@@ -9,7 +9,6 @@ import {
 } from 'supertokens-node/framework/custom'
 import SupertokensSession from 'supertokens-node/recipe/session'
 
-import { Layer, Schema } from 'effect'
 import { Forbidden, Unauthorized } from './types.js'
 
 type NextFunction = (err?: any) => void
@@ -88,12 +87,12 @@ export const AuthMiddlewareLive = Layer.effect(
 				}),
 			)
 
-			if (session) {
-				const userId = session?.getUserId()
-				// return yield* app.pipe(
-				//   Effect.provideService(CurrentUser, { id: userId })
-				// );
-			}
+			// if (session) {
+			// 	const userId = session?.getUserId()
+			// 	// return yield* app.pipe(
+			// 	//   Effect.provideService(CurrentUser, { id: userId })
+			// 	// );
+			// }
 
 			return yield* new Unauthorized()
 		} catch (err) {
