@@ -26,7 +26,9 @@ const ServerLive = NodeHttpServer.layer(() => createServer(), {
 const HttpLive = HttpApiBuilder.serve(HttpMiddleware.logger)
 	.pipe(
 		HttpServer.withLogAddress, // Log server address
-		Layer.provide([MiddlewareCorsLive, SupertokensService.layer, ApiLive, ServerLive, HttpApiSwagger.layer({ path: '/docs' }), ServerLive]))
+		Layer.provide([MiddlewareCorsLive, SupertokensService.layer, ApiLive, ServerLive, HttpApiSwagger.layer({ path: '/docs' }).pipe(
+			Layer.provide(ApiLive)
+		)]))
 
 // Run server
 NodeRuntime.runMain(Layer.launch(HttpLive))
