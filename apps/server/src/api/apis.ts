@@ -77,6 +77,8 @@ const ApiDemoLive = HttpApiBuilder.group(api, 'demo', handlers =>
 				return new ResponseProtected({ userId: user.id })
 			}),
 		),
+).pipe(
+	Layer.provide(AuthMiddlewareLive)
 )
 
 const ApiUsersLive = HttpApiBuilder.group(api, 'users', handlers =>
@@ -102,8 +104,10 @@ const ApiUsersLive = HttpApiBuilder.group(api, 'users', handlers =>
 			})
 		}),
 	),
+).pipe(
+	Layer.provide(AuthMiddlewareLive)
 )
 
 export const ApiLive = HttpApiBuilder.api(api).pipe(
-	Layer.provide([ApiDemoLive, ApiUsersLive, AuthMiddlewareLive]),
+	Layer.provide([ApiDemoLive, ApiUsersLive]),
 )

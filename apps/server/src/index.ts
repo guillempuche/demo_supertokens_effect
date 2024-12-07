@@ -1,4 +1,3 @@
-import { createServer } from 'node:http'
 import {
 	HttpApiBuilder,
 	HttpApiSwagger,
@@ -6,7 +5,8 @@ import {
 	HttpServer,
 } from '@effect/platform'
 import { NodeHttpServer, NodeRuntime } from '@effect/platform-node'
-import { Config, Layer } from 'effect'
+import { Layer } from 'effect'
+import { createServer } from 'node:http'
 
 import { ApiLive } from './api/apis.js'
 import { MiddlewareCorsLive } from './api/cors.js'
@@ -25,14 +25,10 @@ const ServerLive = NodeHttpServer.layer(() => createServer(), {
 // Register API with HTTP server
 const HttpLive = HttpApiBuilder.serve(HttpMiddleware.logger)
 	.pipe(
-		Layer.provide(MiddlewareCorsLive),
-		Layer.provide(SupertokensService.layer),
-		Layer.provide(ApiLive),
-		Layer.provide(ServerLive),
 		HttpServer.withLogAddress, // Log server address
-		Layer.provide(HttpApiSwagger.layer({ path: '/docs' })),
-	)
-	.pipe(Layer.provide(ServerLive))
+		Layer.provide([MiddlewareCorsLive, SupertokensService.layer, ApiLive, ServerLive, HttpApiSwagger.layer({ path: '/docs' }).pipe(
+			Layer.provide(ApiLive)
+		)]))
 
 // Run server
 NodeRuntime.runMain(Layer.launch(HttpLive))
