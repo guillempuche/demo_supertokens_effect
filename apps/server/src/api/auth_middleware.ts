@@ -1,5 +1,4 @@
-import { HttpApiMiddleware } from '@effect/platform'
-import * as ServerRequest from '@effect/platform/HttpServerRequest'
+import { HttpApiMiddleware, HttpServerRequest } from '@effect/platform'
 import * as ServerResponse from '@effect/platform/HttpServerResponse'
 import { Effect, Layer, Schema } from 'effect'
 import {
@@ -28,7 +27,7 @@ export class AuthMiddleware extends HttpApiMiddleware.Tag<AuthMiddleware>()(
 export const AuthMiddlewareLive = Layer.effect(
 	AuthMiddleware,
 	Effect.gen(function* () {
-		const request = yield* ServerRequest.HttpServerRequest
+		const request = yield* HttpServerRequest.HttpServerRequest
 
 		// Create PreParsedRequest for Supertokens
 		const preParsedRequest = new PreParsedRequest({
@@ -57,7 +56,7 @@ export const AuthMiddlewareLive = Layer.effect(
 		)
 
 		if (error) {
-			throw error
+			return yield* new MiddlewareError()
 		}
 
 		// handled is valid for these cases:
@@ -80,42 +79,41 @@ export const AuthMiddlewareLive = Layer.effect(
 		// 1. Regular application endpoints
 		// 2. API routes that need session verification
 		// 3. Any non-auth related requests
-		try {
-			const session = yield* Effect.promise(() =>
+		const session = yield* Effect.tryPromise({
+			try: () =>
 				SupertokensSession.getSession(preParsedRequest, baseResponse, {
 					sessionRequired: false,
 				}),
-			)
-
-			// if (session) {
-			// 	const userId = session?.getUserId()
-			// 	// return yield* app.pipe(
-			// 	//   Effect.provideService(CurrentUser, { id: userId })
-			// 	// );
-			// }
-
-			return yield* new Unauthorized()
-		} catch (err) {
-			// Docs: https://github.com/supertokens/supertokens-node/blob/7e33a06f4283a150600a5eabda31615fc5827023/lib/ts/recipe/session/error.ts
-			if (SupertokensSession.Error.isErrorFromSuperTokens(err)) {
-				switch (err.type) {
-					case SupertokensSession.Error.TRY_REFRESH_TOKEN:
-					case SupertokensSession.Error.UNAUTHORISED:
-						return yield* new Unauthorized()
-					case SupertokensSession.Error.INVALID_CLAIMS:
-						return yield* new Forbidden()
-					case SupertokensSession.Error.TOKEN_THEFT_DETECTED:
-						// You might want to handle this case differently, perhaps logging the incident
-						return yield* new Unauthorized()
-					case SupertokensSession.Error.CLEAR_DUPLICATE_SESSION_COOKIES:
-						// Handle duplicate session cookies - usually means clearing them
-						return yield* new Unauthorized()
-					default:
-						throw err
+			catch: err => {
+				// Docs: https://github.com/supertokens/supertokens-node/blob/7e33a06f4283a150600a5eabda31615fc5827023/lib/ts/recipe/session/error.ts
+				if (SupertokensSession.Error.isErrorFromSuperTokens(err)) {
+					switch (err.type) {
+						case SupertokensSession.Error.TRY_REFRESH_TOKEN:
+						case SupertokensSession.Error.UNAUTHORISED:
+							return new Unauthorized()
+						case SupertokensSession.Error.INVALID_CLAIMS:
+							return new Forbidden()
+						case SupertokensSession.Error.TOKEN_THEFT_DETECTED:
+							// You might want to handle this case differently, perhaps logging the incident
+							return new Unauthorized()
+						case SupertokensSession.Error.CLEAR_DUPLICATE_SESSION_COOKIES:
+							// Handle duplicate session cookies - usually means clearing them
+							return new Unauthorized()
+						default:
+							throw err
+					}
 				}
-			}
-			throw err
-		}
+			},
+		})
+
+		// if (session) {
+		// 	const userId = session?.getUserId()
+		// 	// return yield* app.pipe(
+		// 	//   Effect.provideService(CurrentUser, { id: userId })
+		// 	// );
+		// }
+
+		return yield* new Unauthorized()
 	}),
 )
 
