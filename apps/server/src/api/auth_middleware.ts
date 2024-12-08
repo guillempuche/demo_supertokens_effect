@@ -8,7 +8,7 @@ import {
 } from 'supertokens-node/framework/custom'
 import SupertokensSession from 'supertokens-node/recipe/session'
 
-import { Forbidden, Unauthorized } from './types.js'
+import { CurrentUser, Forbidden, Unauthorized } from './types.js'
 
 type NextFunction = (err?: any) => void
 
@@ -79,41 +79,40 @@ export const AuthMiddlewareLive = Layer.effect(
 		// 1. Regular application endpoints
 		// 2. API routes that need session verification
 		// 3. Any non-auth related requests
-		const session = yield* Effect.tryPromise({
-			try: () =>
-				SupertokensSession.getSession(preParsedRequest, baseResponse, {
-					sessionRequired: false,
-				}),
-			catch: err => {
-				// Docs: https://github.com/supertokens/supertokens-node/blob/7e33a06f4283a150600a5eabda31615fc5827023/lib/ts/recipe/session/error.ts
-				if (SupertokensSession.Error.isErrorFromSuperTokens(err)) {
-					switch (err.type) {
-						case SupertokensSession.Error.TRY_REFRESH_TOKEN:
-						case SupertokensSession.Error.UNAUTHORISED:
-							return new Unauthorized()
-						case SupertokensSession.Error.INVALID_CLAIMS:
-							return new Forbidden()
-						case SupertokensSession.Error.TOKEN_THEFT_DETECTED:
-							// You might want to handle this case differently, perhaps logging the incident
-							return new Unauthorized()
-						case SupertokensSession.Error.CLEAR_DUPLICATE_SESSION_COOKIES:
-							// Handle duplicate session cookies - usually means clearing them
-							return new Unauthorized()
-						default:
-							throw err
+		const session: SupertokensSession.SessionContainer | undefined =
+			yield* Effect.tryPromise({
+				try: () =>
+					SupertokensSession.getSession(preParsedRequest, baseResponse, {
+						sessionRequired: false,
+					}),
+				catch: err => {
+					// Docs: https://github.com/supertokens/supertokens-node/blob/7e33a06f4283a150600a5eabda31615fc5827023/lib/ts/recipe/session/error.ts
+					if (SupertokensSession.Error.isErrorFromSuperTokens(err)) {
+						switch (err.type) {
+							case SupertokensSession.Error.TRY_REFRESH_TOKEN:
+							case SupertokensSession.Error.UNAUTHORISED:
+								return new Unauthorized()
+							case SupertokensSession.Error.INVALID_CLAIMS:
+								return new Forbidden()
+							case SupertokensSession.Error.TOKEN_THEFT_DETECTED:
+								// You might want to handle this case differently, perhaps logging the incident
+								return new Unauthorized()
+							case SupertokensSession.Error.CLEAR_DUPLICATE_SESSION_COOKIES:
+								// Handle duplicate session cookies - usually means clearing them
+								return new Unauthorized()
+							default:
+								throw err
+						}
 					}
-				}
-			},
-		})
+				},
+			})
 
-		// if (session) {
-		// 	const userId = session?.getUserId()
-		// 	// return yield* app.pipe(
-		// 	//   Effect.provideService(CurrentUser, { id: userId })
-		// 	// );
-		// }
+		if (!session) {
+			return yield* new Unauthorized()
+		}
 
-		return yield* new Unauthorized()
+		const userId = session.getUserId()
+		return yield* new CurrentUser(userId)
 	}),
 )
 
